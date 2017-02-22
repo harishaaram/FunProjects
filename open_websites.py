@@ -5,23 +5,22 @@ from BeautifulSoup import *
 
 url = 'http://www.cs.iit.edu/~cs430/'
 dir_path = "/home/harish/Desktop/test/"
+
 html = urllib.urlopen(url).read()
 soup = BeautifulSoup(html)
-soup.prettify()#html document with proper indentation
+tags = soup.findAll('a', href=True)
 
 #initialization
-tags = soup.findAll('a', href=True)
-count = 0
 saveas = []
 already_exist = bool
 
 
 #Checking in the local folder for the filename
 def check_for_file(fname):
-        for root, dirs, files in os.walk(dir_path):
-            if fname in files:
-                return True
-        return False
+    for root, dirs, files in os.walk(dir_path):
+        if fname in files:
+            return True
+    return False
 
 #saving with the word after the last two(because two pdf with same name can exist in different path) backward slash
 def write_to_folder(saveas_splited):
