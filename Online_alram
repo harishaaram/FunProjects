@@ -1,0 +1,37 @@
+# from selenium import webdriver
+#
+# browser = webdriver.Firefox("/usr/bin/firefox")
+# browser.get('http://www.google.com')
+#
+import webbrowser
+import time
+
+print "What time to set up the alarm Mr. Harish Gandhi?[eg format: 16:40]"
+alarmtime = raw_input()
+
+min = int(alarmtime.split(':')[1])
+hr = int(alarmtime.split(':')[0])
+
+
+execute = True
+
+
+while(execute):
+    dt = list(time.localtime())
+    triger = abs(hr - dt[3]) * 60 + abs(min - dt[4])
+
+    if(triger == 0):
+        url = 'https://youtu.be/JGwWNGJdvx8'
+
+        # Open URL in a new tab, if a browser window is already open.
+        webbrowser.open_new_tab(url)
+
+        # Open URL in new window, raising the window if possible.
+        webbrowser.open_new(url)
+        execute = False
+    else:
+        execute = True
+
+
+
+
