@@ -1,0 +1,35 @@
+import urllib
+from bs4 import BeautifulSoup
+import requests
+#from Online_alram import alert
+
+# Description: This program reads user stock symbol and target value of
+# stock price from the realtime stock market and alerts the user.
+#
+# input: textfile containing the stocksymbol-targetprice,(eg: AAPL-140,)
+# NOTE: '-' links the symbol with price and ',' terminates
+#
+#  output: alert if the market price matches the users target price
+
+dir_path = "/home/harish/Desktop/test/"
+url = 'http://finance.yahoo.com/q?s={}'
+
+filename = raw_input()
+fread = open(dir_path+filename,'r').read()
+
+#replace the newline from the file
+str2 = fread.replace("\n","-")
+
+#split the symbol and target price
+splitedlist = str2.split('-')
+
+def scrap_marketstockprice(splitedlist):
+    stockurl = url.format(splitedlist[2])
+    #get the object from the webage
+    obj = requests.get(stockurl)
+    soup = BeautifulSoup(obj.text,"html.parser")
+    print soup
+
+#get the stock price:
+scrap_marketstockprice(splitedlist)
+
