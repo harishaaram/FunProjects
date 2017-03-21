@@ -29,22 +29,24 @@ def scrap_marketstockprice(url):
     dta = requests.get(url).text
     soup = BeautifulSoup(dta, 'html.parser')
     price = soup.find_all(class_=["col-price", "invalid-symbol"])
-    price = [next(x.strings) for x in price]
-    # fix up ': '
-    price = [x.replace(': ','') for x in price]
-    print(price)
+    print soup.title.string
+    strng = []
+    #converting to string
+    for x in price:
+        strng.append(str(x))
+    #printing stock price and str() is used in converting unicode string to ASCII
+    price = [str(next(x.strings)) for x in price]
+    print price
 
 def concatenate_symbols(splitedlist, url):
 #concatenate stock symbols into string
     # eg: http://finance.yahoo.com/quotes/AAPL,GOOG
-    i =0
     symbol_list = ''
-    while i <= len(splitedlist):
+    for i in range(0,len(splitedlist),2):
         if symbol_list=='':
             symbol_list = splitedlist[i]
         else:
             symbol_list = symbol_list + ',' + splitedlist[i]
-        i = i+2
     scrap_marketstockprice(url+symbol_list)
 
 #get the stock price:
